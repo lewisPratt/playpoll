@@ -110,7 +110,7 @@ NEW POLL
 .game-option-item {
   border: 1px solid black;
   margin: 20px;
-  flex-basis: 300px;
+  width: 300px;
   height: 500px;
 
 }

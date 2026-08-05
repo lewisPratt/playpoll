@@ -30,10 +30,14 @@ function StartNewPoll() {
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
   function addAnotherOption() {
-    const previousArray = gameSelections;
-    let newArray = [...previousArray];
-    newArray.push(new GameChoice(`Empty Slot`));
-    setGameSelections(newArray);
+    if (gameSelections.length < 12) {
+      const previousArray = gameSelections;
+      let newArray = [...previousArray];
+      newArray.push(new GameChoice(`Empty Slot`));
+      setGameSelections(newArray);
+    } else {
+      //show notification of limit
+    }
   }
 
   function clearGames() {
@@ -81,6 +85,7 @@ function StartNewPoll() {
               name={`${value.name}`}
               votes={value.votes}
               clearFunc={clearSingleGame}
+              slotCount={gameSelections.length}
             />
           </div>
         ))}
