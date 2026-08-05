@@ -19,33 +19,37 @@ class GameChoice {
 function StartNewPoll() {
   const gameChoiceFirst = new GameChoice(`Empty Slot`);
   const gameChoiceSecond = new GameChoice(`Empty Slot`);
+  const maxSlots: number = 12;
   let defaultGamesArray: GameChoice[] = [];
   defaultGamesArray.push(gameChoiceFirst);
   defaultGamesArray.push(gameChoiceSecond);
 
   const [gameSelections, setGameSelections] =
     useState<GameChoice[]>(defaultGamesArray);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
   function addAnotherOption() {
-    if (gameSelections.length < 12) {
+    if (gameSelections.length < maxSlots) {
       const previousArray = gameSelections;
       let newArray = [...previousArray];
       newArray.push(new GameChoice(`Empty Slot`));
       setGameSelections(newArray);
     } else {
-      //show notification of limit
+      setErrorMsg(`${maxSlots} is the maximum!`);
     }
   }
 
   function clearGames() {
+    if (errorMsg != "") setErrorMsg("");
     setGameSelections(defaultGamesArray);
   }
 
   function clearSingleGame(e: React.MouseEvent<HTMLButtonElement>) {
     if (gameSelections.length > 2) {
+      setErrorMsg("");
       //get name of current game that's been clicked from data atrtibute
       const gameToClear = e.currentTarget.parentElement?.dataset.slotId;
       if (!gameToClear) return;
@@ -69,6 +73,7 @@ function StartNewPoll() {
       </p>
       <section id="game-option-container">
         <div id="add-more-container">
+          {errorMsg ? <span>{errorMsg}</span> : null}
           {gameSelections.length > 2 ? (
             <button id="reset-slots" onClick={clearGames}>
               Reset

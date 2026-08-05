@@ -14,9 +14,15 @@ function GameOption({
   slotCount,
 }: gameOptionProps) {
   return (
-    <div className="game-option-item" data-slot-id={identifier}>
-      <h2>{name}</h2>
-      {slotCount > 2 ? <button onClick={clearFunc}>Remove slot</button> : null}
+    <div className="game-option-item">
+      <div data-slot-id={identifier}>
+        <h2>{name}</h2>
+        {slotCount > 2 ? (
+          <button onClick={clearFunc}>Remove slot</button>
+        ) : null}
+      </div>
+
+      <button className="add-game-button">ADD</button>
     </div>
   );
 }
