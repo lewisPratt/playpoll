@@ -24,6 +24,26 @@ header {
   background-color: red;
 }
 
+button {
+  background-color: white;
+  border: 1px solid black;
+  padding: 5px 20px;
+  cursor: pointer;
+  transition: .3s;
+
+}
+
+button:hover {
+  background-color: rgb(162, 162, 162);
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  padding: 0;
+  margin: 0 20px;
+}
+
 #spacer {
   flex: 1;
 }
@@ -57,8 +77,8 @@ BUTTONS
 
 #new-poll-button {
   display: block;
-  margin: 20px;
   padding: 20px;
+  border: 1px solid black;
 }
 
 #frontpage-button-container {
@@ -93,4 +113,25 @@ NEW POLL
   flex-basis: 300px;
   height: 500px;
 
+}
+
+#clear-container {
+  width: 100%;
+}
+
+#reset-slots {
+  margin: 0 10px;
+}
+
+#add-more-container {
+  width: 80%;
+  text-align: right;
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 20px;
+}
+
+.game-option-item>h2 {
+  margin: 10px;
 }

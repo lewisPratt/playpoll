@@ -17,8 +17,8 @@ class GameChoice {
 }
 
 function StartNewPoll() {
-  const gameChoiceFirst = new GameChoice(`GameOption`);
-  const gameChoiceSecond = new GameChoice(`GameOption`);
+  const gameChoiceFirst = new GameChoice(`Empty Slot`);
+  const gameChoiceSecond = new GameChoice(`Empty Slot`);
   let defaultGamesArray: GameChoice[] = [];
   defaultGamesArray.push(gameChoiceFirst);
   defaultGamesArray.push(gameChoiceSecond);
@@ -32,7 +32,7 @@ function StartNewPoll() {
   function addAnotherOption() {
     const previousArray = gameSelections;
     let newArray = [...previousArray];
-    newArray.push(new GameChoice(`GameOption`));
+    newArray.push(new GameChoice(`Empty Slot`));
     setGameSelections(newArray);
   }
 
@@ -64,6 +64,16 @@ function StartNewPoll() {
         with friends to start the voting!
       </p>
       <section id="game-option-container">
+        <div id="add-more-container">
+          {gameSelections.length > 2 ? (
+            <button id="reset-slots" onClick={clearGames}>
+              Reset
+            </button>
+          ) : null}
+          <button id="add-more-games" onClick={addAnotherOption}>
+            Add Game Slot
+          </button>
+        </div>
         {gameSelections.map((value, index) => (
           <div key={`${value.name}-${index}`}>
             <GameOption
@@ -74,12 +84,6 @@ function StartNewPoll() {
             />
           </div>
         ))}
-        <div id="add-more-games" onClick={addAnotherOption}>
-          Add
-        </div>
-        <div id="add-more-games" onClick={clearGames}>
-          Clear
-        </div>
       </section>
     </>
   );
