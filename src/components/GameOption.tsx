@@ -1,13 +1,13 @@
 interface gameOptionProps {
   name: string;
   votes: number;
-  keyValue: string;
+  identifier: string;
   clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function GameOption({ name, votes, keyValue, clearFunc }: gameOptionProps) {
+function GameOption({ name, votes, identifier, clearFunc }: gameOptionProps) {
   return (
-    <div key={keyValue} className="game-option-item" data-game-name={name}>
+    <div className="game-option-item" data-slot-id={identifier}>
       <h2>{name}</h2>
       <button onClick={clearFunc}>Remove game</button>
     </div>

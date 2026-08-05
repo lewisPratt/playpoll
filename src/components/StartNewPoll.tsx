@@ -1,22 +1,24 @@
 //allows the user to start a new poll to share with friends.
 //starts with a minimum of two options with ability to add more as needed
 //should allow user to search for a game via IGDB, with realtime search result
-
+import { v4 as uuidv4 } from "uuid";
 import GameOption from "./GameOption";
 import { useState } from "react";
 
 class GameChoice {
   name: string;
   votes: number;
-  constructor(name: string, votes: number = 0) {
+  identifier: string;
+  constructor(name: string, votes: number = 0, identifier = uuidv4()) {
     this.name = name;
     this.votes = votes;
+    this.identifier = identifier;
   }
 }
 
 function StartNewPoll() {
-  const gameChoiceFirst = new GameChoice("EmptyOption1");
-  const gameChoiceSecond = new GameChoice("EmptyOption2");
+  const gameChoiceFirst = new GameChoice(`GameOption`);
+  const gameChoiceSecond = new GameChoice(`GameOption`);
   let defaultGamesArray: GameChoice[] = [];
   defaultGamesArray.push(gameChoiceFirst);
   defaultGamesArray.push(gameChoiceSecond);
@@ -30,7 +32,7 @@ function StartNewPoll() {
   function addAnotherOption() {
     const previousArray = gameSelections;
     let newArray = [...previousArray];
-    newArray.push(new GameChoice(`EmptyOption${newArray.length + 1}`));
+    newArray.push(new GameChoice(`GameOption`));
     setGameSelections(newArray);
   }
 
@@ -39,18 +41,20 @@ function StartNewPoll() {
   }
 
   function clearSingleGame(e: React.MouseEvent<HTMLButtonElement>) {
-    //get name of current game that's been clicked from data atrtibute
-    const gameToClear = e.currentTarget.parentElement?.dataset.gameName;
-    if (!gameToClear) return;
-    const gamesArray = gameSelections;
-    const foundGame = gamesArray.find((x) => gameToClear === x.name);
-    if (foundGame) {
-      const foundGameIndex = gamesArray.indexOf(foundGame);
-      gamesArray.splice(foundGameIndex, 1);
-      const newGamesArray = [...gamesArray];
-      setGameSelections(newGamesArray);
-    } else {
-      console.log("game not found");
+    if (gameSelections.length > 2) {
+      //get name of current game that's been clicked from data atrtibute
+      const gameToClear = e.currentTarget.parentElement?.dataset.slotId;
+      if (!gameToClear) return;
+      const gamesArray = gameSelections;
+      const foundGame = gamesArray.find((x) => gameToClear === x.identifier);
+      if (foundGame) {
+        const foundGameIndex = gamesArray.indexOf(foundGame);
+        gamesArray.splice(foundGameIndex, 1);
+        const newGamesArray = [...gamesArray];
+        setGameSelections(newGamesArray);
+      } else {
+        console.log("game not found");
+      }
     }
   }
   return (
@@ -61,10 +65,10 @@ function StartNewPoll() {
       </p>
       <section id="game-option-container">
         {gameSelections.map((value, index) => (
-          <div key={`${value.name} - ${index}`}>
+          <div key={`${value.name}-${index}`}>
             <GameOption
-              keyValue={value.name}
-              name={value.name}
+              identifier={value.identifier}
+              name={`${value.name}`}
               votes={value.votes}
               clearFunc={clearSingleGame}
             />
