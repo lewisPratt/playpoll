@@ -27,7 +27,7 @@ function StartNewPoll() {
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
-  function addAnotherOption(e: React.MouseEvent<HTMLDivElement>) {
+  function addAnotherOption() {
     const previousArray = gameSelections;
     let newArray = [...previousArray];
     newArray.push(new GameChoice(`EmptyOption${newArray.length + 1}`));
@@ -38,8 +38,21 @@ function StartNewPoll() {
     setGameSelections(defaultGamesArray);
   }
 
-  function ClearSingleGame(e: React.MouseEvent<HTMLDivElement>) {}
-
+  function clearSingleGame(e: React.MouseEvent<HTMLButtonElement>) {
+    //get name of current game that's been clicked from data atrtibute
+    const gameToClear = e.currentTarget.parentElement?.dataset.gameName;
+    if (!gameToClear) return;
+    const gamesArray = gameSelections;
+    const foundGame = gamesArray.find((x) => gameToClear === x.name);
+    if (foundGame) {
+      const foundGameIndex = gamesArray.indexOf(foundGame);
+      gamesArray.splice(foundGameIndex, 1);
+      const newGamesArray = [...gamesArray];
+      setGameSelections(newGamesArray);
+    } else {
+      console.log("game not found");
+    }
+  }
   return (
     <>
       <p>
@@ -47,12 +60,13 @@ function StartNewPoll() {
         with friends to start the voting!
       </p>
       <section id="game-option-container">
-        {gameSelections.map((value) => (
-          <div key={value.name}>
+        {gameSelections.map((value, index) => (
+          <div key={`${value.name} - ${index}`}>
             <GameOption
               keyValue={value.name}
               name={value.name}
               votes={value.votes}
+              clearFunc={clearSingleGame}
             />
           </div>
         ))}
