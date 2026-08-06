@@ -7,10 +7,10 @@ function FrontPage() {
       <WelcomeMessage />
       <div id="frontpage-button-container">
         <Link to="/start-new">
-          <button id="new-poll-button">I'd like to start a new poll</button>
+          <button id="new-poll-button">Start</button>
         </Link>
         <Link to="/join">
-          <button id="new-poll-button">Join a Poll</button>
+          <button id="new-poll-button">Join</button>
         </Link>
       </div>
     </>

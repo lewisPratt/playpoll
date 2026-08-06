@@ -25,6 +25,7 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 30px;
 }
 
 header h1 {
@@ -36,6 +37,10 @@ h2,
 h3 {
   font-family: var(--heading-font);
   font-weight: normal;
+}
+
+a {
+  font-family: var(--heading-font);
 }
 
 button {
@@ -85,7 +90,18 @@ nav a {
   text-decoration: none;
   padding: 4px;
   margin: 10px;
-  border-bottom: 1px solid black;
+  transition: .3s;
+}
+
+nav a:hover,
+nav a:visited:hover {
+  padding-bottom: 10px;
+  background-color: var(--text);
+  color: white;
+}
+
+nav a:visited {
+  color: var(--text);
 }
 
 /*////////////////////////
@@ -109,6 +125,10 @@ BUTTONS
 #frontpage-button-container {
   display: flex;
   justify-content: center;
+}
+
+button {
+  font-family: var(--heading-font)
 }
 
 /*////////////////////////
