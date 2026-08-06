@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 function Layout() {
   return (
     <>
+      <Header />
       <section id="main-content">
         <BrowserRouter>
           <nav>

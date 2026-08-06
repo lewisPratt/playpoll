@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
 :root {
   --accent-bg: lightgray;
+  --heading-font: "Silkscreen", monospace;
 }
 
 
@@ -18,11 +21,21 @@ body {
 }
 
 header {
-  border: 1px black solid;
-  height: 100px;
   display: flex;
-  background-color: red;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
+}
+
+header h1 {
+  margin: 15px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--heading-font);
+  font-weight: normal;
 }
 
 button {

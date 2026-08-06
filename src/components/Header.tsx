@@ -1,7 +1,7 @@
 function Header() {
   return (
     <header>
-      <p>this is a header</p>
+      <h1>PlayPoll</h1>
     </header>
   );
 }
