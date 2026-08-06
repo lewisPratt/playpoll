@@ -9,11 +9,11 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 function Layout() {
   return (
     <>
-      <Header />
       <section id="main-content">
         <BrowserRouter>
-          <Link to="/">Home</Link>
-
+          <nav>
+            <Link to="/">Home</Link>
+          </nav>
           <Routes>
             <Route path="/start-new" element={<StartNewPoll />} />
             <Route path="/join" element={<JoinExistingPoll />} />
@@ -21,7 +21,6 @@ function Layout() {
           </Routes>
         </BrowserRouter>
       </section>
-      <div id="spacer"></div>
       <Footer />
     </>
   );

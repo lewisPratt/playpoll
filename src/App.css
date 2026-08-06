@@ -22,6 +22,7 @@ header {
   height: 100px;
   display: flex;
   background-color: red;
+  width: 100%;
 }
 
 button {
@@ -44,12 +45,10 @@ a {
   margin: 0 20px;
 }
 
-#spacer {
-  flex: 1;
-}
+
 
 footer {
-  padding: 50px 0;
+  height: 50px;
   background: var(--accent-bg);
 }
 
@@ -58,9 +57,22 @@ footer {
   width: 100%;
   justify-content: center;
   margin-bottom: 20px;
-  padding: 50px 0;
   flex-wrap: wrap;
   flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+nav {
+  text-align: left;
+
+}
+
+nav a {
+  text-decoration: none;
+  padding: 4px;
+  margin: 10px;
+  border-bottom: 1px solid black;
 }
 
 /*////////////////////////
@@ -94,6 +106,12 @@ WELCOME
   width: 100%;
 }
 
+/*////////////////////////
+FRONT PAGE
+///////////////////////*/
+#welcome-message p {
+  margin: 20px 0;
+}
 
 /*////////////////////////
 NEW POLL
@@ -105,6 +123,7 @@ NEW POLL
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .game-option-item {
@@ -154,7 +173,22 @@ NEW POLL
   align-items: center;
 }
 
+/*////////////////////////
+Join Poll
+///////////////////////*/
 
+#join-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#share-code {
+  margin: 20px;
+  border: 5px solid #e3e3e3;
+  height: 30px;
+  width: 300px;
+}
 
 @keyframes fade-in {
   0% {

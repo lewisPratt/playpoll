@@ -1,7 +1,7 @@
 function WelcomeMessage() {
   return (
     <div id="welcome-message">
-      <p>Welcome to Play Poll.</p>
+      <h2>Welcome to Play Poll.</h2>
       <p>Making your games night an easy decision.</p>
     </div>
   );
