@@ -28,7 +28,7 @@ function StartNewPoll() {
   const [gameSelections, setGameSelections] =
     useState<GameChoice[]>(defaultGamesArray);
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [searchBox, setSearchBox] = useState<boolean>(false);
+  const [searchBoxString, setSearchBox] = useState<string>("");
 
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
@@ -73,7 +73,12 @@ function StartNewPoll() {
         Pick at least two games below to create a new poll, then share the code
         with friends to start the voting!
       </p>
-      {searchBox ? <SearchBox searchBoxSetter={setSearchBox} /> : null}
+      {searchBoxString ? (
+        <SearchBox
+          searchBoxSetter={setSearchBox}
+          slotIdentifier={searchBoxString}
+        />
+      ) : null}
 
       <section id="game-option-container">
         <div id="add-more-container">

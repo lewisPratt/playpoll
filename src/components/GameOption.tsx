@@ -8,7 +8,7 @@ interface gameOptionProps {
   identifier: string;
   clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
   slotCount: number;
-  searchBoxSetter: Dispatch<SetStateAction<boolean>>;
+  searchBoxSetter: Dispatch<SetStateAction<string>>;
 }
 
 function GameOption({
@@ -28,7 +28,10 @@ function GameOption({
         ) : null}
       </div>
 
-      <button className="add-game-button" onClick={() => searchBoxSetter(true)}>
+      <button
+        className="add-game-button"
+        onClick={() => searchBoxSetter(identifier)}
+      >
         ADD
       </button>
     </div>
