@@ -235,6 +235,25 @@ NEW POLL
   padding: 5px;
 }
 
+.search-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 20px;
+  border: 1px solid black;
+  transition: .3s;
+  cursor: pointer;
+  box-shadow: 1px -4px 15px rgba(0, 0, 0, .25)
+}
+
+.search-result>h4 {
+  margin: 10px;
+}
+
+.search-result:hover {
+  scale: 1.02;
+}
+
 /*////////////////////////
 Join Poll
 ///////////////////////*/

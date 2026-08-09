@@ -1,11 +1,20 @@
 import type { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
+import SearchResult from "./SearchResult";
 
 interface SearchBoxProps {
   searchBoxSetter: Dispatch<SetStateAction<string>>;
   slotIdentifier: string;
 }
-
+interface gameResults {
+  name: string;
+  coverUrl: string;
+}
 function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
+  const [searchResults, setSearchResults] = useState<gameResults[] | null>(
+    null,
+  );
+
   let timer: number;
   const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
@@ -21,7 +30,7 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
       clearTimeout(timer);
       timer = setTimeout(function () {
         searchGame(e.target.value);
-      }, 2000);
+      }, 500);
     }
   }
 
@@ -50,6 +59,7 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
       } else {
         //successful api call
         console.log(data);
+        setSearchResults(data);
       }
     };
 
@@ -75,6 +85,15 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
               readOnly
             />
           </form>
+          <>
+            {searchResults
+              ? searchResults.map((result) => (
+                  <div id="results-container" key={result.name}>
+                    <SearchResult name={result.name} image={result.coverUrl} />
+                  </div>
+                ))
+              : null}
+          </>
         </div>
       </div>
     </>
