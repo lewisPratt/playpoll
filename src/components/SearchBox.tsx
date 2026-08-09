@@ -31,6 +31,8 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
       timer = setTimeout(function () {
         searchGame(e.target.value);
       }, 500);
+    } else {
+      setSearchResults(null);
     }
   }
 
