@@ -1,9 +1,14 @@
+import React, { useState } from "react";
+import SearchBox from "./SearchBox";
+import type { Dispatch, SetStateAction } from "react";
+
 interface gameOptionProps {
   name: string;
   votes: number;
   identifier: string;
   clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
   slotCount: number;
+  searchBoxSetter: Dispatch<SetStateAction<boolean>>;
 }
 
 function GameOption({
@@ -12,6 +17,7 @@ function GameOption({
   identifier,
   clearFunc,
   slotCount,
+  searchBoxSetter,
 }: gameOptionProps) {
   return (
     <div className="game-option-item">
@@ -22,7 +28,9 @@ function GameOption({
         ) : null}
       </div>
 
-      <button className="add-game-button">ADD</button>
+      <button className="add-game-button" onClick={() => searchBoxSetter(true)}>
+        ADD
+      </button>
     </div>
   );
 }

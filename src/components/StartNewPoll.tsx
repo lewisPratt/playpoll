@@ -3,6 +3,7 @@
 //should allow user to search for a game via IGDB, with realtime search result
 import { v4 as uuidv4 } from "uuid";
 import GameOption from "./GameOption";
+import SearchBox from "./SearchBox";
 import { useState } from "react";
 
 class GameChoice {
@@ -27,6 +28,7 @@ function StartNewPoll() {
   const [gameSelections, setGameSelections] =
     useState<GameChoice[]>(defaultGamesArray);
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [searchBox, setSearchBox] = useState<boolean>(false);
 
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
@@ -71,6 +73,8 @@ function StartNewPoll() {
         Pick at least two games below to create a new poll, then share the code
         with friends to start the voting!
       </p>
+      {searchBox ? <SearchBox searchBoxSetter={setSearchBox} /> : null}
+
       <section id="game-option-container">
         <div id="add-more-container">
           {errorMsg ? <span>{errorMsg}</span> : null}
@@ -91,6 +95,7 @@ function StartNewPoll() {
               votes={value.votes}
               clearFunc={clearSingleGame}
               slotCount={gameSelections.length}
+              searchBoxSetter={setSearchBox}
             />
           </div>
         ))}
