@@ -1,5 +1,6 @@
 import { Link, Routes, Route } from "react-router-dom";
 import WelcomeMessage from "./WelcomeMessage";
+import TestApi from "./TestApi";
 
 function FrontPage() {
   return (
@@ -12,6 +13,7 @@ function FrontPage() {
         <Link to="/join">
           <button id="new-poll-button">Join</button>
         </Link>
+        {/* <TestApi /> */}
       </div>
     </>
   );
