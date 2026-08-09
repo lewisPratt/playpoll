@@ -1,32 +1,37 @@
 import { useEffect } from "react";
 
 function TestApi() {
-  const clientId = import.meta.env.VITE_API_CLIENT_ID;
-  const clientSecret = import.meta.env.VITE_API_SECRET_KEY;
+  const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       const response = await fetch(
-  //         `https://api.torn.com/v2/faction/rankedwars?offset=0&limit=20&sort=DESC`,
-  //         {
-  //           headers: {
-  //             Authorization: `ApiKey ${apiKey}`,
-  //             accept: "application/json",
-  //           },
-  //         },
-  //       );
-  //       const data = await response.json();
-  //       if (data.error) {
-  //         console.log("error");
-  //         //setErrorMsg(data.error.error);
-  //         console.log(data);
-  //       } else {
-  //         //successful api call
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/quick-api`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            searchTerm: "hunt showdown",
+          }),
+          headers: {
+            Authorization: `Bearer ${publishableKey}`,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const data = await response.json();
+      if (data.error) {
+        console.log("error");
+        //setErrorMsg(data.error.error);
+        console.log(data);
+      } else {
+        //successful api call
+        console.log(data);
+      }
+    };
 
-  //     fetchData();
-  //   }, []);
+    fetchData();
+  }, []);
 
   return <p>test</p>;
 }
