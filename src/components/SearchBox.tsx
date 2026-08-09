@@ -6,6 +6,7 @@ interface SearchBoxProps {
 }
 
 function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
+  let timer: number;
   function closeOverlay(e: React.MouseEvent<HTMLDivElement>) {
     const clicked = e.target;
     if (clicked === e.currentTarget) {
@@ -13,6 +14,16 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
     }
   }
 
+  function debounceSearch(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value != "") {
+      clearTimeout(timer);
+      timer = setTimeout(searchGame, 2000);
+    }
+  }
+
+  async function searchGame() {
+    alert("search sent");
+  }
   return (
     <>
       <div className="overlay" onClick={closeOverlay}>
@@ -21,6 +32,7 @@ function SearchBox({ searchBoxSetter, slotIdentifier }: SearchBoxProps) {
             <input
               id="search-box"
               type="text"
+              onChange={debounceSearch}
               placeholder="Name of your game"
             />
             <input
