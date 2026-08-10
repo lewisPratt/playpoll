@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import GameOption from "./GameOption";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
+import ShareCodeGenerator from "./ShareCodeGenerator";
 
 class GameChoice {
   name: string;
@@ -25,6 +26,8 @@ class GameChoice {
 }
 
 function StartNewPoll() {
+  //   const shareCode = ShareCodeGenerator();
+
   const gameChoiceFirst = new GameChoice(`Empty Slot`);
   const gameChoiceSecond = new GameChoice(`Empty Slot`);
   const maxSlots: number = 12;
@@ -87,7 +90,6 @@ function StartNewPoll() {
       setSearchBox("");
     }
   }
-
   return (
     <>
       <p>

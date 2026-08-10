@@ -243,7 +243,8 @@ NEW POLL
   position: relative;
 }
 
-.search-container #search-box {
+.search-container #search-box,
+#share-code {
   height: 50px;
   margin: 20px;
   width: 400px;
@@ -333,12 +334,7 @@ Join Poll
   align-items: center;
 }
 
-#share-code {
-  margin: 20px;
-  border: 5px solid #e3e3e3;
-  height: 50px;
-  width: 300px;
-}
+
 
 #share-code:focus {
   outline: none;

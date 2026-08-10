@@ -51,7 +51,7 @@ function SearchBox({
       clearTimeout(timer);
       timer = setTimeout(function () {
         searchGame(e.target.value);
-      }, 1500);
+      }, 500);
     } else {
       //setSearchResults(null);
     }
@@ -97,7 +97,6 @@ function SearchBox({
       fetchData();
     }
   }
-
   return (
     <>
       <div className="overlay" onClick={closeOverlay}>
