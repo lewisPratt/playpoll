@@ -29,9 +29,18 @@ function SearchBox({
   let timer: number;
   const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
+  //closes the search box and overlay if the overlay is clicked.
   function closeOverlay(e: React.MouseEvent<HTMLDivElement>) {
     const clicked = e.target;
     if (clicked === e.currentTarget) {
+      searchBoxSetter("");
+    }
+  }
+  //closes the search box and overlay if escape is pressed while focus is on the searchbox input
+  function closeOverlayKey(e: React.KeyboardEvent<HTMLDivElement>) {
+    console.log("test");
+    console.log(e.key);
+    if (e.key === "Escape") {
       searchBoxSetter("");
     }
   }
@@ -96,6 +105,7 @@ function SearchBox({
               onChange={debounceSearch}
               placeholder="Name of your game"
               autoComplete="off"
+              onKeyUp={closeOverlayKey}
             />
             <input
               id="game-slot"
