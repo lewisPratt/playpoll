@@ -81,11 +81,13 @@ function StartNewPoll() {
     });
     if (slotToFill) {
       slotToFill.cover = gameCover;
+      slotToFill.name = gameName;
       const updatedSelections = [...gameSelections];
       setGameSelections(updatedSelections);
+      setSearchBox("");
     }
   }
-  console.log(gameSelections);
+
   return (
     <>
       <p>

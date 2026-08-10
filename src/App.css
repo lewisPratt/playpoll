@@ -166,7 +166,7 @@ NEW POLL
   height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   border-radius: 10px;
   animation: fade-in;
@@ -193,10 +193,14 @@ NEW POLL
   background: white;
   padding: 20px;
   z-index: 150;
+  margin-bottom: 50px;
 }
 
 .game-option-item h2 {
   margin: 10px;
+  font-size: .8rem;
+  background-color: white;
+  padding: 5px;
 }
 
 .add-game-button {
@@ -297,6 +301,7 @@ NEW POLL
 
 .game-option-item:hover {
   translate: 0 -10px;
+  scale: 1.02;
 }
 
 .game-option-item:hover .game-cover {
