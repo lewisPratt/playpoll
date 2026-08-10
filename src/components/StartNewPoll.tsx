@@ -10,10 +10,17 @@ class GameChoice {
   name: string;
   votes: number;
   identifier: string;
-  constructor(name: string, votes: number = 0, identifier = uuidv4()) {
+  cover: string;
+  constructor(
+    name: string,
+    votes: number = 0,
+    identifier = uuidv4(),
+    cover: string = "",
+  ) {
     this.name = name;
     this.votes = votes;
     this.identifier = identifier;
+    this.cover = cover;
   }
 }
 
@@ -67,6 +74,18 @@ function StartNewPoll() {
       }
     }
   }
+  function setSelectedGame(gameName: string, gameCover: string, slot: string) {
+    // alert("you selected ".concat(gameName) + " in slot:" + slot);
+    const slotToFill = gameSelections.find((currentSlot) => {
+      return currentSlot.identifier === slot;
+    });
+    if (slotToFill) {
+      slotToFill.cover = gameCover;
+      const updatedSelections = [...gameSelections];
+      setGameSelections(updatedSelections);
+    }
+  }
+  console.log(gameSelections);
   return (
     <>
       <p>
@@ -77,6 +96,7 @@ function StartNewPoll() {
         <SearchBox
           searchBoxSetter={setSearchBox}
           slotIdentifier={searchBoxString}
+          selectedGameSetter={setSelectedGame}
         />
       ) : null}
 
@@ -101,6 +121,7 @@ function StartNewPoll() {
               clearFunc={clearSingleGame}
               slotCount={gameSelections.length}
               searchBoxSetter={setSearchBox}
+              cover={value.cover}
             />
           </div>
         ))}

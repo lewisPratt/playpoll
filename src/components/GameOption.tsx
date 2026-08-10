@@ -9,6 +9,7 @@ interface gameOptionProps {
   clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
   slotCount: number;
   searchBoxSetter: Dispatch<SetStateAction<string>>;
+  cover: string;
 }
 
 function GameOption({
@@ -17,6 +18,7 @@ function GameOption({
   identifier,
   clearFunc,
   slotCount,
+  cover,
   searchBoxSetter,
 }: gameOptionProps) {
   return (
@@ -34,6 +36,9 @@ function GameOption({
       >
         ADD
       </button>
+      {cover ? (
+        <div className="game-cover" style={{ background: `${cover}` }}></div>
+      ) : null}
     </div>
   );
 }
