@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import SearchBox from "./SearchBox";
 import type { Dispatch, SetStateAction } from "react";
-import Vibrant from "node-vibrant";
-import type { Vec3 } from "node-vibrant/lib/color";
 
 interface gameOptionProps {
   name: string;
@@ -23,25 +20,10 @@ function GameOption({
   cover,
   searchBoxSetter,
 }: gameOptionProps) {
-  const opts = {};
-  let vibrantDominant: Vec3;
-  let shadowColour: string = "";
-  const [boxShadowColor, setBoxShadowColor] = useState<string>(
+  const [boxShadowColor, _setBoxShadowColor] = useState<string>(
     "10px 10px 10px rgba(0,0,0,.5)",
   );
-  if (cover) {
-    let v = new Vibrant(cover, opts);
-    v.getPalette().then((palette) => {
-      if (palette.Vibrant) {
-        vibrantDominant = palette.Vibrant.getRgb();
-        vibrantDominant.forEach((colorValue) => {
-          shadowColour = shadowColour + colorValue.toString() + ",";
-        });
-        const shadowColor = `10px 10px 10px rgba(${shadowColour}.5)`;
-        setBoxShadowColor(shadowColor);
-      }
-    });
-  }
+
   return (
     <div
       className="game-option-item"

@@ -249,6 +249,7 @@ NEW POLL
   width: 400px;
   font-size: 1.2rem;
   padding: 5px;
+  font-family: var(--heading-font)
 }
 
 .search-result {

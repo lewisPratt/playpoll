@@ -43,6 +43,8 @@ function SearchBox({
     }
   }
 
+  //delay the sending of api query to give user a chance to type in their game name
+  //when timer is finished call api query function
   function debounceSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchResults(null);
     if (e.target.value.length >= 3) {
@@ -55,42 +57,45 @@ function SearchBox({
     }
   }
 
+  //query api endpoint, first check that search term is above 3 characters to avoid pointless calls
   async function searchGame(searchTerm: string) {
-    console.log("sendign search query: " + searchTerm);
-    setLoadingState(true);
-    const fetchData = async () => {
-      const response = await fetch(
-        `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/quick-api`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            searchTerm: `${searchTerm}`,
-          }),
-          headers: {
-            Authorization: `Bearer ${publishableKey}`,
-            accept: "application/json",
-            "Content-Type": "application/json",
+    if (searchTerm.length >= 3) {
+      console.log("sendign search query: " + searchTerm);
+      setLoadingState(true);
+      const fetchData = async () => {
+        const response = await fetch(
+          `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/quick-api`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              searchTerm: `${searchTerm}`,
+            }),
+            headers: {
+              Authorization: `Bearer ${publishableKey}`,
+              accept: "application/json",
+              "Content-Type": "application/json",
+            },
           },
-        },
-      );
-      const data = await response.json();
-      if (data.error) {
-        console.log("error");
-        //setErrorMsg(data.error.error);
-        console.log(data);
-      } else {
-        //successful api call
-        console.log(data);
-        setLoadingState(false);
-        if (data.length > 0) {
-          setSearchResults(data);
+        );
+        const data = await response.json();
+        if (data.error) {
+          console.log("error");
+          //setErrorMsg(data.error.error);
+          console.log(data);
         } else {
-          setSearchResults(null);
+          //successful api call
+          console.log(data);
+          setLoadingState(false);
+          if (data.length > 0) {
+            setSearchResults(data);
+          } else {
+            setSearchResults(null);
+          }
         }
-      }
-    };
+      };
 
-    fetchData();
+      fetchData();
+    }
   }
 
   return (

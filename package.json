@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "node-vibrant": "^3.1.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.11.0",
