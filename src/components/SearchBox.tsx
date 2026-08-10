@@ -26,7 +26,7 @@ function SearchBox({
   );
   const [loadingState, setLoadingState] = useState<boolean>(false);
 
-  let timer: number;
+  let timer: ReturnType<typeof setTimeout>;
   const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
   //closes the search box and overlay if the overlay is clicked.
@@ -38,8 +38,6 @@ function SearchBox({
   }
   //closes the search box and overlay if escape is pressed while focus is on the searchbox input
   function closeOverlayKey(e: React.KeyboardEvent<HTMLDivElement>) {
-    console.log("test");
-    console.log(e.key);
     if (e.key === "Escape") {
       searchBoxSetter("");
     }
@@ -47,17 +45,18 @@ function SearchBox({
 
   function debounceSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchResults(null);
-    if (e.target.value != "") {
+    if (e.target.value.length >= 3) {
       clearTimeout(timer);
       timer = setTimeout(function () {
         searchGame(e.target.value);
-      }, 500);
+      }, 1500);
     } else {
-      //   setSearchResults(null);
+      //setSearchResults(null);
     }
   }
 
   async function searchGame(searchTerm: string) {
+    console.log("sendign search query: " + searchTerm);
     setLoadingState(true);
     const fetchData = async () => {
       const response = await fetch(
