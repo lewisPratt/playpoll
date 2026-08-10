@@ -26,7 +26,9 @@ function GameOption({
       <div data-slot-id={identifier}>
         <h2>{name}</h2>
         {slotCount > 2 ? (
-          <button onClick={clearFunc}>Remove slot</button>
+          <button className="remove-slot-button" onClick={clearFunc}>
+            Remove slot
+          </button>
         ) : null}
       </div>
 
