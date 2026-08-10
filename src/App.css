@@ -172,6 +172,7 @@ NEW POLL
   animation: fade-in;
   animation-duration: .5s;
   position: relative;
+  overflow: hidden;
 }
 
 #clear-container {
@@ -198,9 +199,9 @@ NEW POLL
 .add-game-button {
   margin: 20px;
   border: 2px solid black;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 90%;
+
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -274,11 +275,19 @@ NEW POLL
 .game-cover {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  translate: -50% 0;
   height: 100%;
+  width: auto;
   background-size: cover;
   z-index: -1;
+  filter: grayscale(1) opacity(0.5);
+  transition: .3s;
+}
+
+.game-option-item:hover .game-cover {
+  filter: none;
+
 }
 
 /*////////////////////////

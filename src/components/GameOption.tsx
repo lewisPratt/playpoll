@@ -34,11 +34,9 @@ function GameOption({
         className="add-game-button"
         onClick={() => searchBoxSetter(identifier)}
       >
-        ADD
+        {cover ? "Change" : "Add"}
       </button>
-      {cover ? (
-        <div className="game-cover" style={{ background: `${cover}` }}></div>
-      ) : null}
+      {cover ? <img className="game-cover" src={cover} /> : null}
     </div>
   );
 }
