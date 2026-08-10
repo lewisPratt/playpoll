@@ -313,6 +313,10 @@ NEW POLL
   translate: 0;
 }
 
+#no-results-p {
+  margin: 20px;
+}
+
 /*////////////////////////
 Join Poll
 ///////////////////////*/

@@ -137,7 +137,7 @@ function SearchBox({
                   </div>
                 ))
               ) : (
-                <p>Waiting for awesomeness</p>
+                <p id="no-results-p">Waiting for pro gamer knowledge...</p>
               )}
             </div>
           </>
