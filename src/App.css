@@ -324,6 +324,14 @@ NEW POLL
   margin: 20px;
 }
 
+#save-poll-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
 /*////////////////////////
 Join Poll
 ///////////////////////*/

@@ -6,7 +6,7 @@ import GameOption from "./GameOption";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
 import ShareCodeGenerator from "./ShareCodeGenerator";
-
+import { supabase } from "./supabaseClient";
 class GameChoice {
   name: string;
   votes: number;
@@ -26,8 +26,6 @@ class GameChoice {
 }
 
 function StartNewPoll() {
-  //   const shareCode = ShareCodeGenerator();
-
   const gameChoiceFirst = new GameChoice(`Empty Slot`);
   const gameChoiceSecond = new GameChoice(`Empty Slot`);
   const maxSlots: number = 12;
@@ -39,6 +37,7 @@ function StartNewPoll() {
     useState<GameChoice[]>(defaultGamesArray);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [searchBoxString, setSearchBox] = useState<string>("");
+  const [saveState, setSaveState] = useState<string | null>(null);
 
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
@@ -90,12 +89,33 @@ function StartNewPoll() {
       setSearchBox("");
     }
   }
+
+  async function savePoll(gamesArray: GameChoice[]) {
+    const shareCode = ShareCodeGenerator();
+
+    const { data, error } = await supabase.from("polls").insert([
+      {
+        share_code: shareCode,
+        selected_games: gamesArray,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error creating poll:", error);
+    } else {
+      console.log("Poll created:", data);
+      //sucessful poll insertion
+      setSaveState(shareCode);
+    }
+  }
+
   return (
     <>
       <p>
         Pick at least two games below to create a new poll, then share the code
         with friends to start the voting!
       </p>
+      {saveState ? <p>{saveState}</p> : null}
       {searchBoxString ? (
         <SearchBox
           searchBoxSetter={setSearchBox}
@@ -129,6 +149,25 @@ function StartNewPoll() {
             />
           </div>
         ))}
+
+        {gameSelections.find((game) => {
+          //check the game selections array to see if any of the games have the default empty name
+          //find() returns true if the condition is met so renders null
+          // if there are no games that have the default empty slot name, render save button
+          //check runs every time a game is added to a slot due to re render
+          return game.name === "Empty Slot";
+        }) ? null : (
+          <div id="save-poll-button-container">
+            <button
+              id="save-poll-button"
+              onClick={() => {
+                savePoll(gameSelections);
+              }}
+            >
+              Save Poll
+            </button>
+          </div>
+        )}
       </section>
     </>
   );
