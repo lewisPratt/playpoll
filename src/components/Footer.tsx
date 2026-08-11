@@ -1,7 +1,11 @@
 function Footer() {
   return (
     <footer>
-      <p>this is a Footer</p>
+      <div>
+        <h5>
+          PlayPoll - <span>Making the choice easy</span>
+        </h5>
+      </div>
     </footer>
   );
 }
