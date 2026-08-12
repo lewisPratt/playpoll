@@ -15,6 +15,7 @@ interface gameResults {
   name: string;
   coverUrl: string;
   image_id: string;
+  release: number;
 }
 function SearchBox({
   searchBoxSetter,
@@ -137,7 +138,11 @@ function SearchBox({
                       )
                     }
                   >
-                    <SearchResult name={result.name} image={result.coverUrl} />
+                    <SearchResult
+                      name={result.name}
+                      image={result.coverUrl}
+                      release={result.release}
+                    />
                   </div>
                 ))
               ) : (

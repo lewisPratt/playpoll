@@ -9,6 +9,7 @@ interface gameOptionProps {
   slotCount: number;
   searchBoxSetter: Dispatch<SetStateAction<string>>;
   cover: string;
+  saveState: string | null;
 }
 
 function GameOption({
@@ -19,6 +20,7 @@ function GameOption({
   slotCount,
   cover,
   searchBoxSetter,
+  saveState,
 }: gameOptionProps) {
   const [boxShadowColor, _setBoxShadowColor] = useState<string>(
     "10px 10px 10px rgba(0,0,0,.5)",
@@ -36,19 +38,20 @@ function GameOption({
     >
       <div data-slot-id={identifier}>
         <h2>{name}</h2>
-        {slotCount > 2 ? (
+        {slotCount > 2 && saveState === null ? (
           <button className="remove-slot-button" onClick={clearFunc}>
             Remove slot
           </button>
         ) : null}
       </div>
-
-      <button
-        className="add-game-button"
-        onClick={() => searchBoxSetter(identifier)}
-      >
-        {cover ? "Change" : "Add"}
-      </button>
+      {saveState === null ? (
+        <button
+          className="add-game-button"
+          onClick={() => searchBoxSetter(identifier)}
+        >
+          {cover ? "Change" : "Add"}
+        </button>
+      ) : null}
       {cover ? <img className="game-cover" src={cover} /> : null}
     </div>
   );

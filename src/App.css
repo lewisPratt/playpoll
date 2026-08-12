@@ -241,6 +241,7 @@ NEW POLL
   filter: blur(20px);
   display: block;
   z-index: 2;
+
 }
 
 #clear-container {
@@ -342,17 +343,6 @@ NEW POLL
   animation: shine .75s;
 }
 
-@-webkit-keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
-
-@keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
 
 .add-game-button {
   margin: 20px;
@@ -515,5 +505,18 @@ Join Poll
 
   100% {
     translate: 0;
+  }
+}
+
+
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
   }
 }

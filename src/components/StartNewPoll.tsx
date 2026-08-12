@@ -8,6 +8,8 @@ import { useState } from "react";
 import ShareCodeGenerator from "./ShareCodeGenerator";
 import { supabase } from "./supabaseClient";
 import ShareCodeOverlay from "./ShareCodeOverlay";
+import { Link } from "react-router-dom";
+
 class GameChoice {
   name: string;
   votes: number;
@@ -40,6 +42,8 @@ function StartNewPoll() {
   const [searchBoxString, setSearchBox] = useState<string>("");
   const [saveState, setSaveState] = useState<string | null>(null);
   const [shareCodeOverlay, setShareCodeOverlay] = useState<boolean>(false);
+  const [clipboardCopied, setClipboardCopied] = useState<boolean>(false);
+
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
@@ -90,7 +94,11 @@ function StartNewPoll() {
       setSearchBox("");
     }
   }
-
+  function saveToClipboard(e: React.MouseEvent<HTMLParagraphElement>) {
+    console.log(e.currentTarget.innerText);
+    navigator.clipboard.writeText(e.currentTarget.innerText);
+    setClipboardCopied(true);
+  }
   async function savePoll(gamesArray: GameChoice[]) {
     const shareCode = ShareCodeGenerator();
 
@@ -132,17 +140,19 @@ function StartNewPoll() {
       ) : null}
 
       <section id="game-option-container">
-        <div id="add-more-container">
-          {errorMsg ? <span>{errorMsg}</span> : null}
-          {gameSelections.length > 2 ? (
-            <button id="reset-slots" onClick={clearGames}>
-              Reset
+        {saveState === null ? (
+          <div id="add-more-container">
+            {errorMsg ? <span>{errorMsg}</span> : null}
+            {gameSelections.length > 2 ? (
+              <button id="reset-slots" onClick={clearGames}>
+                Reset
+              </button>
+            ) : null}
+            <button id="add-more-games" onClick={addAnotherOption}>
+              Add Game Slot
             </button>
-          ) : null}
-          <button id="add-more-games" onClick={addAnotherOption}>
-            Add Game Slot
-          </button>
-        </div>
+          </div>
+        ) : null}
         {gameSelections.map((value, index) => (
           <div key={`${value.name}-${index}`}>
             <GameOption
@@ -153,6 +163,7 @@ function StartNewPoll() {
               slotCount={gameSelections.length}
               searchBoxSetter={setSearchBox}
               cover={value.cover}
+              saveState={saveState}
             />
           </div>
         ))}
@@ -163,7 +174,7 @@ function StartNewPoll() {
           // if there are no games that have the default empty slot name, render save button
           //check runs every time a game is added to a slot due to re render
           return game.name === "Empty Slot";
-        }) && saveState === null ? null : (
+        }) || saveState != null ? null : (
           <div id="save-poll-button-container">
             <button
               id="save-poll-button"
@@ -175,6 +186,24 @@ function StartNewPoll() {
             </button>
           </div>
         )}
+        {saveState ? (
+          <div id="share-code-container">
+            <p id="instruct">
+              Share this code with your friends to start voting!
+            </p>
+            <p id="code" onClick={saveToClipboard}>
+              {saveState}
+            </p>
+            {clipboardCopied ? (
+              <p id="copied-p">
+                Share code copied to clipboard{" "}
+                <Link id="author-join-link" to="/join">
+                  Join
+                </Link>
+              </p>
+            ) : null}
+          </div>
+        ) : null}
       </section>
     </>
   );
