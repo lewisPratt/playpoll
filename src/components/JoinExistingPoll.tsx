@@ -19,6 +19,16 @@ class GameChoice {
     this.cover = cover;
   }
 }
+interface storedGame {
+  cover: string;
+  identifier: string;
+  name: string;
+  votes: number;
+}
+
+interface returnedGameData {
+  selected_games: storedGame[];
+}
 
 function JoinExistingPoll() {
   const [gameSelections, setGameSelections] = useState<GameChoice[] | null>(
@@ -46,35 +56,39 @@ function JoinExistingPoll() {
     if (error) {
       console.error("Error creating poll:", error);
     } else {
-      console.log("Poll created:", data);
+      console.log("Poll grabbed:", data);
       //sucessful poll insertion
-      // setSaveState(shareCode);
+      console.log(data[0].selected_games);
+      const storedGames: GameChoice[] = data[0].selected_games;
+      setGameSelections(storedGames);
     }
   }
   return (
     <>
-      {gameSelections ? (
-        gameSelections.map((value, index) => (
-          <div key={`${value.name}-${index}`}>
-            <GameOptionViewer
-              identifier={value.identifier}
-              name={`${value.name}`}
-              votes={value.votes}
-              castVote={castUserVote}
-              slotCount={gameSelections.length}
-              cover={value.cover}
-            />
+      <section id="game-option-container">
+        {gameSelections ? (
+          gameSelections.map((value, index) => (
+            <div key={`${value.name}-${index}`}>
+              <GameOptionViewer
+                identifier={value.identifier}
+                name={`${value.name}`}
+                votes={value.votes}
+                castVote={castUserVote}
+                slotCount={gameSelections.length}
+                cover={value.cover}
+              />
+            </div>
+          ))
+        ) : (
+          <div id="join-poll-input-container">
+            <h2>Join an existing poll</h2>
+            <form id="join-form" onSubmit={getPoll}>
+              <input type="text" name="share-code" id="share-code"></input>
+              <button>Join Poll</button>
+            </form>
           </div>
-        ))
-      ) : (
-        <div id="join-poll-input-container">
-          <h2>Join an existing poll</h2>
-          <form id="join-form" onSubmit={getPoll}>
-            <input type="text" name="share-code" id="share-code"></input>
-            <button>Join Poll</button>
-          </form>
-        </div>
-      )}
+        )}
+      </section>
     </>
   );
 }

@@ -7,6 +7,7 @@ import SearchBox from "./SearchBox";
 import { useState } from "react";
 import ShareCodeGenerator from "./ShareCodeGenerator";
 import { supabase } from "./supabaseClient";
+import ShareCodeOverlay from "./ShareCodeOverlay";
 class GameChoice {
   name: string;
   votes: number;
@@ -38,7 +39,7 @@ function StartNewPoll() {
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [searchBoxString, setSearchBox] = useState<string>("");
   const [saveState, setSaveState] = useState<string | null>(null);
-
+  const [shareCodeOverlay, setShareCodeOverlay] = useState<boolean>(false);
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
@@ -106,6 +107,7 @@ function StartNewPoll() {
       console.log("Poll created:", data);
       //sucessful poll insertion
       setSaveState(shareCode);
+      setShareCodeOverlay(true);
     }
   }
 
@@ -115,7 +117,12 @@ function StartNewPoll() {
         Pick at least two games below to create a new poll, then share the code
         with friends to start the voting!
       </p>
-      {saveState ? <p>{saveState}</p> : null}
+      {shareCodeOverlay && saveState ? (
+        <ShareCodeOverlay
+          shareCode={saveState}
+          shareOverlaySetter={setShareCodeOverlay}
+        />
+      ) : null}
       {searchBoxString ? (
         <SearchBox
           searchBoxSetter={setSearchBox}
@@ -156,7 +163,7 @@ function StartNewPoll() {
           // if there are no games that have the default empty slot name, render save button
           //check runs every time a game is added to a slot due to re render
           return game.name === "Empty Slot";
-        }) ? null : (
+        }) && saveState === null ? null : (
           <div id="save-poll-button-container">
             <button
               id="save-poll-button"

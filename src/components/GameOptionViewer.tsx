@@ -19,19 +19,15 @@ function GameOptionViewer({
   slotCount,
   cover,
 }: gameOptionProps) {
-  const [boxShadowColor, _setBoxShadowColor] = useState<string>(
-    "10px 10px 10px rgba(0,0,0,.5)",
-  );
   const [slideInAnimation, setSlideInAnimation] = useState<boolean>(false);
 
   return (
     <div
       onAnimationEnd={(e: React.AnimationEvent) => setSlideInAnimation(true)}
       className={cn(
-        "game-option-item",
+        "game-option-viewer-item",
         slideInAnimation ? "game-slot-mounted-class" : "game-slot-insert-class",
       )}
-      style={{ boxShadow: `${boxShadowColor}` }}
     >
       <div data-slot-id={identifier}>
         <h2>{name}</h2>
@@ -42,7 +38,11 @@ function GameOptionViewer({
         ) : null}
       </div>
 
-      {cover ? <img className="game-cover" src={cover} /> : null}
+      {cover ? (
+        <figure>
+          <img className="game-cover" src={cover} />
+        </figure>
+      ) : null}
     </div>
   );
 }
