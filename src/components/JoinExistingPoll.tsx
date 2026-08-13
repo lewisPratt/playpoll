@@ -39,15 +39,19 @@ function JoinExistingPoll() {
   const [voteStatus, setVoteStatus] = useState<boolean>(false);
   const [voteIdentifier, setVoteIdentifier] = useState<string | null>(null);
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
-  function castUserVote() {
+
+  function castUserVote(e: React.MouseEvent<HTMLDivElement>) {
     if (voteStatus && voteIdentifier != null) {
       console.log("You've already voted");
       setAlreadyVoted(true);
     }
     if (!voteStatus && voteIdentifier === null) {
-      console.log("vote has been cast");
+      const gameVotedFor = e.currentTarget.dataset.slotId
+        ? e.currentTarget.dataset.slotId
+        : "unkown";
+      console.log("vote has been cast: ", gameVotedFor);
       setVoteStatus(true);
-      setVoteIdentifier("test");
+      setVoteIdentifier(gameVotedFor);
     }
   }
 

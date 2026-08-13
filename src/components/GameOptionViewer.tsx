@@ -23,6 +23,7 @@ function GameOptionViewer({
 
   return (
     <div
+      data-slot-id={identifier}
       onClick={castVote}
       onAnimationEnd={(e: React.AnimationEvent) => setSlideInAnimation(true)}
       className={cn(
@@ -30,7 +31,7 @@ function GameOptionViewer({
         slideInAnimation ? "game-slot-mounted-class" : "game-slot-insert-class",
       )}
     >
-      <div data-slot-id={identifier}>
+      <div>
         <h2>{name}</h2>
       </div>
 
