@@ -8,7 +8,7 @@ interface gameOptionProps {
   identifier: string;
   slotCount: number;
   cover: string;
-  castVote: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  castVote: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 function GameOptionViewer({
@@ -23,6 +23,7 @@ function GameOptionViewer({
 
   return (
     <div
+      onClick={castVote}
       onAnimationEnd={(e: React.AnimationEvent) => setSlideInAnimation(true)}
       className={cn(
         "game-option-viewer-item",
@@ -31,11 +32,6 @@ function GameOptionViewer({
     >
       <div data-slot-id={identifier}>
         <h2>{name}</h2>
-        {slotCount > 2 ? (
-          <button className="remove-slot-button" onClick={castVote}>
-            Remove slot
-          </button>
-        ) : null}
       </div>
 
       {cover ? (

@@ -3,7 +3,6 @@ import type { Dispatch, SetStateAction } from "react";
 import cn from "classnames";
 interface gameOptionProps {
   name: string;
-  votes: number;
   identifier: string;
   clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
   slotCount: number;
@@ -14,7 +13,6 @@ interface gameOptionProps {
 
 function GameOption({
   name,
-  votes,
   identifier,
   clearFunc,
   slotCount,

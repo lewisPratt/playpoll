@@ -1,7 +1,7 @@
 //allows the user to start a new poll to share with friends.
 //starts with a minimum of two options with ability to add more as needed
 //should allow user to search for a game via IGDB, with realtime search result
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, type UUIDTypes } from "uuid";
 import GameOption from "./GameOption";
 import SearchBox from "./SearchBox";
 import { useState } from "react";
@@ -12,20 +12,22 @@ import { Link } from "react-router-dom";
 
 class GameChoice {
   name: string;
-  votes: number;
   identifier: string;
   cover: string;
-  constructor(
-    name: string,
-    votes: number = 0,
-    identifier = uuidv4(),
-    cover: string = "",
-  ) {
+  constructor(name: string, identifier = uuidv4(), cover: string = "") {
     this.name = name;
-    this.votes = votes;
     this.identifier = identifier;
     this.cover = cover;
   }
+}
+interface gameChoiceShape {
+  name: string;
+  identifier: UUIDTypes;
+  cover: string;
+}
+interface votesArrayShape {
+  identifier: UUIDTypes;
+  votes: number;
 }
 
 function StartNewPoll() {
@@ -99,13 +101,20 @@ function StartNewPoll() {
     navigator.clipboard.writeText(e.currentTarget.innerText);
     setClipboardCopied(true);
   }
-  async function savePoll(gamesArray: GameChoice[]) {
-    const shareCode = ShareCodeGenerator();
 
+  async function savePoll(gamesArray: gameChoiceShape[]) {
+    const shareCode = ShareCodeGenerator();
+    let votesArray: votesArrayShape[] = [];
+    gamesArray.forEach((game) => {
+      const gameVotes = { identifier: game.identifier, votes: 0 };
+      console.log(gameVotes);
+      votesArray.push(gameVotes);
+    });
     const { data, error } = await supabase.from("polls").insert([
       {
         share_code: shareCode,
         selected_games: gamesArray,
+        votes: votesArray,
       },
     ]);
 
@@ -158,7 +167,6 @@ function StartNewPoll() {
             <GameOption
               identifier={value.identifier}
               name={`${value.name}`}
-              votes={value.votes}
               clearFunc={clearSingleGame}
               slotCount={gameSelections.length}
               searchBoxSetter={setSearchBox}

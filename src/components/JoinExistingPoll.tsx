@@ -36,9 +36,19 @@ function JoinExistingPoll() {
   );
 
   const [errorMsg, setErrorMsg] = useState<string>("");
-
+  const [voteStatus, setVoteStatus] = useState<boolean>(false);
+  const [voteIdentifier, setVoteIdentifier] = useState<string | null>(null);
+  const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
   function castUserVote() {
-    return <p>A vote was cast</p>;
+    if (voteStatus && voteIdentifier != null) {
+      console.log("You've already voted");
+      setAlreadyVoted(true);
+    }
+    if (!voteStatus && voteIdentifier === null) {
+      console.log("vote has been cast");
+      setVoteStatus(true);
+      setVoteIdentifier("test");
+    }
   }
 
   async function getPoll(e: React.SubmitEvent<HTMLFormElement>) {
@@ -65,6 +75,12 @@ function JoinExistingPoll() {
   }
   return (
     <>
+      {voteStatus && voteIdentifier != null ? (
+        <p>Your vote has been cast</p>
+      ) : (
+        <p>Cast your vote below</p>
+      )}
+      {alreadyVoted ? <p>You've already voted you silly goose!</p> : null}
       <section id="game-option-container">
         {gameSelections ? (
           gameSelections.map((value, index) => (
