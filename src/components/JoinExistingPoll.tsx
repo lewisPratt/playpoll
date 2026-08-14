@@ -50,6 +50,7 @@ function JoinExistingPoll() {
         ? e.currentTarget.dataset.slotId
         : "unkown";
       console.log("vote has been cast: ", gameVotedFor);
+
       setVoteStatus(true);
       setVoteIdentifier(gameVotedFor);
     }
@@ -96,6 +97,7 @@ function JoinExistingPoll() {
                 castVote={castUserVote}
                 slotCount={gameSelections.length}
                 cover={value.cover}
+                votedFor={voteIdentifier}
               />
             </div>
           ))

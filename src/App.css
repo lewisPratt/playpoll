@@ -306,7 +306,9 @@ NEW POLL
 }
 
 .game-option-item h2,
-.game-option-viewer-item h2 {
+.game-option-viewer-item h2,
+.vote-choice h2,
+.not-picked h2 {
   margin: 10px;
   font-size: .8rem;
   background-color: white;
@@ -473,7 +475,55 @@ Join Poll
   align-items: center;
 }
 
+.vote-choice {
+  border: 1px solid black;
+  margin: 20px;
+  width: 300px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 5px 5px 20px black;
+  transition: .3s;
+  transform-origin: center;
+  outline: 5px solid gold;
+  box-shadow: -6px 6px 50px 20px gold;
+  animation: pulse-boxshadow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
 
+.vote-choice .game-cover {
+  filter: none;
+}
+
+.not-picked {
+  border: 1px solid black;
+  margin: 20px;
+  width: 300px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 5px 5px 20px black;
+  transition: .3s;
+  transform-origin: center;
+  /* box-shadow: -6px 6px 30px 5px red; */
+
+}
+
+.not-picked .game-cover {
+  filter: brightness(.2) sepia(1);
+  transition: .3s;
+}
 
 
 #share-code:focus {
@@ -508,6 +558,21 @@ Join Poll
   }
 }
 
+@keyframes pulse-boxshadow {
+  0% {
+    box-shadow: -6px 6px 50px 20px gold;
+
+  }
+
+  50% {
+    box-shadow: -6px 6px 50px 20px rgba(255, 217, 0, 0.458);
+    translate: 0 -10px;
+  }
+
+  100% {
+    box-shadow: -6px 6px 50px 20px gold;
+  }
+}
 
 @-webkit-keyframes shine {
   100% {
