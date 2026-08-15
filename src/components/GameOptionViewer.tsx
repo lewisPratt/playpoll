@@ -39,9 +39,9 @@ function GameOptionViewer({
         slideInAnimation && votedFor === null
           ? "game-slot-mounted-class"
           : null,
-        votedFor === null ? "game-option-viewer-item" : null, // no vote as yet so set the default card styling
-        votedFor === identifier ? "vote-choice" : null, //this is the card the user voted on
-        votedFor != identifier && votedFor != null ? "not-picked" : null, //this game card was not voted on so style accordingly
+        votedFor === null && "game-option-viewer-item", // no vote as yet so set the default card styling
+        votedFor === identifier && "vote-choice", //this is the card the user voted on
+        votedFor != identifier && votedFor != null && "not-picked", //this game card was not voted on so style accordingly
       )}
     >
       <div>

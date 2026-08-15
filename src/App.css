@@ -502,7 +502,6 @@ Join Poll
 }
 
 .not-picked {
-  border: 1px solid black;
   margin: 20px;
   width: 300px;
   height: 500px;
@@ -513,21 +512,39 @@ Join Poll
   border-radius: 10px;
   position: relative;
   overflow: hidden;
-  box-shadow: 5px 5px 20px black;
   transition: .3s;
   transform-origin: center;
   /* box-shadow: -6px 6px 30px 5px red; */
 
 }
 
+.not-picked h2 {
+  text-decoration: line-through;
+  filter: opacity(.5);
+}
+
 .not-picked .game-cover {
-  filter: brightness(.2) sepia(1);
+  filter: opacity(.2) brightness(.2) sepia(1);
   transition: .3s;
+  animation: sepia-fade-in;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
 }
 
 
 #share-code:focus {
   outline: none;
+}
+
+@keyframes sepia-fade-in {
+  0% {
+    filter: opacity(.5) brightness(1) sepia(0);
+  }
+
+  100% {
+    filter: opacity(.2) brightness(.2) sepia(1);
+  }
 }
 
 @keyframes fade-in {

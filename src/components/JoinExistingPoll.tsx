@@ -39,6 +39,7 @@ function JoinExistingPoll() {
   const [voteStatus, setVoteStatus] = useState<boolean>(false);
   const [voteIdentifier, setVoteIdentifier] = useState<string | null>(null);
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
+  const [currentShareCode, setCurrentShareCode] = useState<string>("");
 
   function castUserVote(e: React.MouseEvent<HTMLDivElement>) {
     if (voteStatus && voteIdentifier != null) {
@@ -49,7 +50,10 @@ function JoinExistingPoll() {
       const gameVotedFor = e.currentTarget.dataset.slotId
         ? e.currentTarget.dataset.slotId
         : "unkown";
-      console.log("vote has been cast: ", gameVotedFor);
+      localStorage.setItem(
+        "pollChoice",
+        JSON.stringify({ currentShareCode, gameVotedFor }),
+      );
 
       setVoteStatus(true);
       setVoteIdentifier(gameVotedFor);
@@ -62,7 +66,10 @@ function JoinExistingPoll() {
     const formData = new FormData(form);
     const shareCode = formData.get("share-code");
     console.log(shareCode);
-
+    if (shareCode) {
+      setCurrentShareCode(shareCode.toString());
+      console.log("set local sharecode");
+    }
     const { data, error } = await supabase
       .from("polls")
       .select("selected_games")
