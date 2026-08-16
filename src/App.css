@@ -449,9 +449,26 @@ NEW POLL
   transition: .3s;
 }
 
+.game-result-row-details {
+  margin: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+.game-result-row-details p {
+  font-size: .6rem;
+  line-height: .7rem;
+}
 
+.game-result-row-details h4 {
+  margin: 0;
+}
 
+#game-results-count {
+  font-family: var(--heading-font);
+}
 
 #no-results-p {
   margin: 20px;

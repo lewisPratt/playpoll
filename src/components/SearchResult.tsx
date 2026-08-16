@@ -13,8 +13,10 @@ function SearchResult({ name, image, release }: searchResultProps) {
       data-game-name={name}
       data-game-cover={gameLargeCover}
     >
-      <h4>{name}</h4>
-      <p>{releaseDate.toLocaleDateString()}</p>
+      <div className="game-result-row-details">
+        <h4>{name}</h4>
+        <p>{releaseDate.toLocaleDateString()}</p>
+      </div>
       <img src={image}></img>
     </div>
   );

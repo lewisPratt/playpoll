@@ -123,6 +123,11 @@ function SearchBox({
           <>
             <div id="results-container">
               {loadingState ? <p>Searching..</p> : null}
+              {searchResults && (
+                <p id="game-results-count">
+                  {searchResults.length} games found.
+                </p>
+              )}
               {searchResults ? (
                 searchResults.map((result) => (
                   <div
