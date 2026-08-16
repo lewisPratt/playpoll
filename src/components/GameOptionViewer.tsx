@@ -8,14 +8,14 @@ interface gameOptionProps {
   slotCount: number;
   cover: string;
   votedFor: string | null;
-  castVote: (e: React.MouseEvent<HTMLDivElement>) => void;
+  handleVoteCast: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 function GameOptionViewer({
   name,
   votes,
   identifier,
-  castVote,
+  handleVoteCast,
   slotCount,
   cover,
   votedFor,
@@ -28,7 +28,7 @@ function GameOptionViewer({
 
       onClick={
         votedFor === null
-          ? castVote
+          ? handleVoteCast
           : () => {
               console.log("nno longer attached");
             }

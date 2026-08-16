@@ -41,7 +41,7 @@ function JoinExistingPoll() {
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
   const [currentShareCode, setCurrentShareCode] = useState<string>("");
 
-  function castUserVote(e: React.MouseEvent<HTMLDivElement>) {
+  function handleVoteCast(e: React.MouseEvent<HTMLDivElement>) {
     if (voteStatus && voteIdentifier != null) {
       console.log("You've already voted");
       setAlreadyVoted(true);
@@ -101,7 +101,7 @@ function JoinExistingPoll() {
                 identifier={value.identifier}
                 name={`${value.name}`}
                 votes={value.votes}
-                castVote={castUserVote}
+                handleVoteCast={handleVoteCast}
                 slotCount={gameSelections.length}
                 cover={value.cover}
                 votedFor={voteIdentifier}

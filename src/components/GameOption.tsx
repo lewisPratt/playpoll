@@ -4,7 +4,7 @@ import cn from "classnames";
 interface gameOptionProps {
   name: string;
   identifier: string;
-  clearFunc: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClearSingleGame: (e: React.MouseEvent<HTMLButtonElement>) => void;
   slotCount: number;
   searchBoxSetter: Dispatch<SetStateAction<string>>;
   cover: string;
@@ -14,7 +14,7 @@ interface gameOptionProps {
 function GameOption({
   name,
   identifier,
-  clearFunc,
+  handleClearSingleGame,
   slotCount,
   cover,
   searchBoxSetter,
@@ -37,7 +37,10 @@ function GameOption({
       <div data-slot-id={identifier}>
         <h2>{name}</h2>
         {slotCount > 2 && saveState === null ? (
-          <button className="remove-slot-button" onClick={clearFunc}>
+          <button
+            className="remove-slot-button"
+            onClick={handleClearSingleGame}
+          >
             Remove slot
           </button>
         ) : null}

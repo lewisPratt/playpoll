@@ -49,7 +49,7 @@ function StartNewPoll() {
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
   //detect a change as previousArray is the same array as before, despite having additional contents.
-  function addAnotherOption() {
+  function handleAddSlot() {
     if (gameSelections.length < maxSlots) {
       const previousArray = gameSelections;
       let newArray = [...previousArray];
@@ -60,12 +60,12 @@ function StartNewPoll() {
     }
   }
 
-  function clearGames() {
+  function handleClearSelectedGames() {
     if (errorMsg != "") setErrorMsg("");
     setGameSelections(defaultGamesArray);
   }
 
-  function clearSingleGame(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleClearSingleGame(e: React.MouseEvent<HTMLButtonElement>) {
     if (gameSelections.length > 2) {
       setErrorMsg("");
       //get name of current game that's been clicked from data atrtibute
@@ -96,13 +96,13 @@ function StartNewPoll() {
       setSearchBox("");
     }
   }
-  function saveToClipboard(e: React.MouseEvent<HTMLParagraphElement>) {
+  function handleSaveToClipboard(e: React.MouseEvent<HTMLParagraphElement>) {
     console.log(e.currentTarget.innerText);
     navigator.clipboard.writeText(e.currentTarget.innerText);
     setClipboardCopied(true);
   }
 
-  async function savePoll(gamesArray: gameChoiceShape[]) {
+  async function handleSavePoll(gamesArray: gameChoiceShape[]) {
     const shareCode = ShareCodeGenerator();
     let votesArray: votesArrayShape[] = [];
     gamesArray.forEach((game) => {
@@ -153,11 +153,11 @@ function StartNewPoll() {
           <div id="add-more-container">
             {errorMsg ? <span>{errorMsg}</span> : null}
             {gameSelections.length > 2 ? (
-              <button id="reset-slots" onClick={clearGames}>
+              <button id="reset-slots" onClick={handleClearSelectedGames}>
                 Reset
               </button>
             ) : null}
-            <button id="add-more-games" onClick={addAnotherOption}>
+            <button id="add-more-games" onClick={handleAddSlot}>
               Add Game Slot
             </button>
           </div>
@@ -167,7 +167,7 @@ function StartNewPoll() {
             <GameOption
               identifier={value.identifier}
               name={`${value.name}`}
-              clearFunc={clearSingleGame}
+              handleClearSingleGame={handleClearSingleGame}
               slotCount={gameSelections.length}
               searchBoxSetter={setSearchBox}
               cover={value.cover}
@@ -187,7 +187,7 @@ function StartNewPoll() {
             <button
               id="save-poll-button"
               onClick={() => {
-                savePoll(gameSelections);
+                handleSavePoll(gameSelections);
               }}
             >
               Save Poll
@@ -199,7 +199,7 @@ function StartNewPoll() {
             <p id="instruct">
               Share this code with your friends to start voting!
             </p>
-            <p id="code" onClick={saveToClipboard}>
+            <p id="code" onClick={handleSaveToClipboard}>
               {saveState}
             </p>
             {clipboardCopied ? (
