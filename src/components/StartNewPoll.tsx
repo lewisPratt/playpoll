@@ -107,7 +107,6 @@ function StartNewPoll() {
     let votesArray: votesArrayShape[] = [];
     gamesArray.forEach((game) => {
       const gameVotes = { identifier: game.identifier, votes: 0 };
-      console.log(gameVotes);
       votesArray.push(gameVotes);
     });
     const { data, error } = await supabase.from("polls").insert([

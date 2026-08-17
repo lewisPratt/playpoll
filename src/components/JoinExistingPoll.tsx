@@ -29,7 +29,9 @@ interface storedGame {
 interface returnedGameData {
   selected_games: storedGame[];
 }
-
+interface localPollDataShape {
+  polls: {};
+}
 function JoinExistingPoll() {
   const [gameSelections, setGameSelections] = useState<GameChoice[] | null>(
     null,
@@ -41,6 +43,47 @@ function JoinExistingPoll() {
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
   const [currentShareCode, setCurrentShareCode] = useState<string>("");
 
+  async function checkVoteCast() {
+    if (localStorage.getItem("pollChoice")) {
+      console.log("previously voted", localStorage.getItem("pollChoice"));
+    } else {
+      console.log("No poll choice found");
+    }
+    // const fetchData = async () => {
+    //   const response = await fetch(
+    //     `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/quick-api`,
+    //     {
+    //       method: "POST",
+    //       body: JSON.stringify({
+    //         searchTerm: `${searchTerm}`,
+    //       }),
+    //       headers: {
+    //         Authorization: `Bearer ${publishableKey}`,
+    //         accept: "application/json",
+    //         "Content-Type": "application/json",
+    //       },
+    //     },
+    //   );
+    //   const data = await response.json();
+    //   if (data.error) {
+    //     console.log("error");
+    //     //setErrorMsg(data.error.error);
+    //     console.log(data);
+    //   } else {
+    //     //successful api call
+    //     console.log(data);
+    //     setLoadingState(false);
+    //     if (data.length > 0) {
+    //       setSearchResults(data);
+    //     } else {
+    //       setSearchResults(null);
+    //     }
+    //   }
+    // };
+
+    // fetchData();
+  }
+
   function handleVoteCast(e: React.MouseEvent<HTMLDivElement>) {
     if (voteStatus && voteIdentifier != null) {
       console.log("You've already voted");
@@ -50,10 +93,27 @@ function JoinExistingPoll() {
       const gameVotedFor = e.currentTarget.dataset.slotId
         ? e.currentTarget.dataset.slotId
         : "unkown";
-      localStorage.setItem(
-        "pollChoice",
-        JSON.stringify({ currentShareCode, gameVotedFor }),
-      );
+      const voterId = uuidv4();
+      if (localStorage.getItem("polls")) {
+        //polls already stored locally, update them
+        const localPollsData = localStorage.getItem("polls");
+        const pollsObject = localPollsData && JSON.parse(localPollsData);
+        let localPolls = [...pollsObject.polls];
+        localPolls.push({
+          share_code: currentShareCode,
+          gameVotedFor,
+          voterId,
+        });
+        const updatedLocalPolls = { polls: localPolls };
+        localStorage.setItem("polls", JSON.stringify(updatedLocalPolls));
+      } else {
+        localStorage.setItem(
+          "polls",
+          JSON.stringify({
+            polls: [{ share_code: currentShareCode, gameVotedFor, voterId }],
+          }),
+        );
+      }
 
       setVoteStatus(true);
       setVoteIdentifier(gameVotedFor);
@@ -87,10 +147,13 @@ function JoinExistingPoll() {
   }
   return (
     <>
-      {voteStatus && voteIdentifier != null ? (
-        <p>Your vote has been cast</p>
-      ) : (
-        <p>Cast your vote below</p>
+      {voteStatus && voteIdentifier != null && (
+        <div id="vote-cast-container">
+          <p id="vote-status-text">Your vote has been cast</p>
+          <p id="vote-hangout-prompt">
+            Hang out here or come back later to see the results!
+          </p>
+        </div>
       )}
       {alreadyVoted ? <p>You've already voted you silly goose!</p> : null}
       <section id="game-option-container">

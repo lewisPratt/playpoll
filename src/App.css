@@ -485,6 +485,27 @@ NEW POLL
 /*////////////////////////
 Join Poll
 ///////////////////////*/
+#vote-cast-container {
+  background-color: rgb(244, 244, 244);
+  text-align: center;
+  margin: 20px;
+  border-radius: 10px;
+  animation: slide-in;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+#vote-cast-container #vote-status-text,
+#vote-cast-container #vote-prompt-text {
+  margin: 10px;
+  font-family: var(--heading-font)
+}
+
+#vote-cast-container #vote-hangout-prompt {
+  margin: 10px;
+  font-family: var(--heading-font);
+  font-size: .6rem;
+}
 
 #join-form {
   display: flex;
@@ -552,6 +573,18 @@ Join Poll
 
 #share-code:focus {
   outline: none;
+}
+
+@keyframes slide-in {
+  0% {
+    translate: 0 -100%;
+    opacity: 0;
+  }
+
+  100% {
+    translate: 0;
+    opacity: 1;
+  }
 }
 
 @keyframes sepia-fade-in {
