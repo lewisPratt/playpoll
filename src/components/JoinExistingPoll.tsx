@@ -51,13 +51,14 @@ function JoinExistingPoll() {
 
   if (localPollsData) {
     const parsedData: localStoreShape = JSON.parse(localPollsData);
-    console.log(parsedData.polls);
-    if (
-      parsedData.polls.find((poll: localPollDataShape) => {
+    const previousVoteGame = parsedData.polls.find(
+      (poll: localPollDataShape) => {
         return poll.share_code === currentShareCode;
-      })
-    ) {
-      console.log("already voted in this poll");
+      },
+    );
+    if (previousVoteGame && !voteStatus && !voteIdentifier) {
+      setVoteStatus(true);
+      setVoteIdentifier(previousVoteGame.gameVotedFor);
     }
   }
 
