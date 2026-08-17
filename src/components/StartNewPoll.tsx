@@ -26,8 +26,7 @@ interface gameChoiceShape {
   cover: string;
 }
 interface votesArrayShape {
-  identifier: UUIDTypes;
-  votes: number;
+  [key: string]: number;
 }
 
 function StartNewPoll() {
@@ -104,16 +103,17 @@ function StartNewPoll() {
 
   async function handleSavePoll(gamesArray: gameChoiceShape[]) {
     const shareCode = ShareCodeGenerator();
-    let votesArray: votesArrayShape[] = [];
+    const gameVotes: votesArrayShape = {};
+
     gamesArray.forEach((game) => {
-      const gameVotes = { identifier: game.identifier, votes: 0 };
-      votesArray.push(gameVotes);
+      gameVotes[String(game.identifier)] = 0;
     });
     const { data, error } = await supabase.from("polls").insert([
       {
         share_code: shareCode,
         selected_games: gamesArray,
-        votes: votesArray,
+        votes: gameVotes,
+        voters: [],
       },
     ]);
 

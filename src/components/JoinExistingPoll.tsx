@@ -30,60 +30,72 @@ interface returnedGameData {
   selected_games: storedGame[];
 }
 interface localPollDataShape {
-  polls: {};
+  share_code: string;
+  voterId: string;
+  gameVotedFor: string;
+}
+interface localStoreShape {
+  polls: localPollDataShape[];
 }
 function JoinExistingPoll() {
   const [gameSelections, setGameSelections] = useState<GameChoice[] | null>(
     null,
   );
-
+  const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [voteStatus, setVoteStatus] = useState<boolean>(false);
   const [voteIdentifier, setVoteIdentifier] = useState<string | null>(null);
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
   const [currentShareCode, setCurrentShareCode] = useState<string>("");
+  const localPollsData = localStorage.getItem("polls");
 
-  async function checkVoteCast() {
-    if (localStorage.getItem("pollChoice")) {
-      console.log("previously voted", localStorage.getItem("pollChoice"));
-    } else {
-      console.log("No poll choice found");
+  if (localPollsData) {
+    const parsedData: localStoreShape = JSON.parse(localPollsData);
+    console.log(parsedData.polls);
+    if (
+      parsedData.polls.find((poll: localPollDataShape) => {
+        return poll.share_code === currentShareCode;
+      })
+    ) {
+      console.log("already voted in this poll");
     }
-    // const fetchData = async () => {
-    //   const response = await fetch(
-    //     `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/quick-api`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify({
-    //         searchTerm: `${searchTerm}`,
-    //       }),
-    //       headers: {
-    //         Authorization: `Bearer ${publishableKey}`,
-    //         accept: "application/json",
-    //         "Content-Type": "application/json",
-    //       },
-    //     },
-    //   );
-    //   const data = await response.json();
-    //   if (data.error) {
-    //     console.log("error");
-    //     //setErrorMsg(data.error.error);
-    //     console.log(data);
-    //   } else {
-    //     //successful api call
-    //     console.log(data);
-    //     setLoadingState(false);
-    //     if (data.length > 0) {
-    //       setSearchResults(data);
-    //     } else {
-    //       setSearchResults(null);
-    //     }
-    //   }
-    // };
-
-    // fetchData();
   }
 
+  async function submitVote(
+    gameIdent: string,
+    voterId: string,
+    shareCode: string,
+  ) {
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://lmzsnthuaysxrqgygfwm.supabase.co/functions/v1/cast-vote`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            gameIdent,
+            voterId,
+            shareCode,
+          }),
+          headers: {
+            Authorization: `Bearer ${publishableKey}`,
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const data = await response.json();
+      if (data.error) {
+        console.log("error");
+        //setErrorMsg(data.error.error);
+        console.log(data);
+      } else {
+        //successful api call
+        console.log(data);
+      }
+    };
+
+    fetchData();
+  }
   function handleVoteCast(e: React.MouseEvent<HTMLDivElement>) {
     if (voteStatus && voteIdentifier != null) {
       console.log("You've already voted");
@@ -107,6 +119,7 @@ function JoinExistingPoll() {
         const updatedLocalPolls = { polls: localPolls };
         localStorage.setItem("polls", JSON.stringify(updatedLocalPolls));
       } else {
+        //no local data stored, save first poll
         localStorage.setItem(
           "polls",
           JSON.stringify({
@@ -117,6 +130,7 @@ function JoinExistingPoll() {
 
       setVoteStatus(true);
       setVoteIdentifier(gameVotedFor);
+      submitVote(gameVotedFor, voterId, currentShareCode);
     }
   }
 
