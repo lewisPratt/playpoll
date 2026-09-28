@@ -19,16 +19,16 @@ class GameChoice {
     this.cover = cover;
   }
 }
-interface storedGame {
-  cover: string;
-  identifier: string;
-  name: string;
-  votes: number;
-}
+// interface storedGame {
+//   cover: string;
+//   identifier: string;
+//   name: string;
+//   votes: number;
+// }
 
-interface returnedGameData {
-  selected_games: storedGame[];
-}
+// interface returnedGameData {
+//   selected_games: storedGame[];
+// }
 interface localPollDataShape {
   share_code: string;
   voterId: string;
@@ -42,7 +42,7 @@ function JoinExistingPoll() {
     null,
   );
   const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  const [errorMsg, setErrorMsg] = useState<string>("");
+  // const [errorMsg, setErrorMsg] = useState<string>("");
   const [voteStatus, setVoteStatus] = useState<boolean>(false);
   const [voteIdentifier, setVoteIdentifier] = useState<string | null>(null);
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);

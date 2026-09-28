@@ -6,7 +6,7 @@ function Header() {
       <header>
         <h1>PlayPoll</h1>
         <nav>
-          <Link to="/">Home</Link>
+          <Link to="/playpoll">Home</Link>
           <Link to="/start-new">Start</Link>
           <Link to="/join">Join</Link>
         </nav>

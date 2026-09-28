@@ -13,10 +13,10 @@ interface gameOptionProps {
 
 function GameOptionViewer({
   name,
-  votes,
+
   identifier,
   handleVoteCast,
-  slotCount,
+
   cover,
   votedFor,
 }: gameOptionProps) {
@@ -33,7 +33,7 @@ function GameOptionViewer({
               console.log("nno longer attached");
             }
       }
-      onAnimationEnd={(e: React.AnimationEvent) => setSlideInAnimation(true)}
+      onAnimationEnd={(_e: React.AnimationEvent) => setSlideInAnimation(true)}
       className={cn(
         !slideInAnimation ? "game-slot-insert-class" : null,
         slideInAnimation && votedFor === null

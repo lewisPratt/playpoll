@@ -27,7 +27,7 @@ function GameOption({
 
   return (
     <div
-      onAnimationEnd={(e: React.AnimationEvent) => setSlideInAnimation(true)}
+      onAnimationEnd={(_e: React.AnimationEvent) => setSlideInAnimation(true)}
       className={cn(
         "game-option-item",
         slideInAnimation ? "game-slot-mounted-class" : "game-slot-insert-class",
