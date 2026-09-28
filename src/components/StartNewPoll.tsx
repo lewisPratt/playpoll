@@ -4,7 +4,7 @@
 import { v4 as uuidv4, type UUIDTypes } from "uuid";
 import GameOption from "./GameOption";
 import SearchBox from "./SearchBox";
-import { useState } from "react";
+import React, { useState } from "react";
 import ShareCodeGenerator from "./ShareCodeGenerator";
 import { supabase } from "./supabaseClient";
 import ShareCodeOverlay from "./ShareCodeOverlay";
@@ -44,6 +44,7 @@ function StartNewPoll() {
   const [saveState, setSaveState] = useState<string | null>(null);
   const [shareCodeOverlay, setShareCodeOverlay] = useState<boolean>(false);
   const [clipboardCopied, setClipboardCopied] = useState<boolean>(false);
+  const [voterCount, setVoterCount] = useState<number>(0);
 
   //add a new empty game container to allow extra games to be added to poll.
   //creates a new array and pushes current games selection into it, otherwise state does not
@@ -104,7 +105,8 @@ function StartNewPoll() {
   async function handleSavePoll(gamesArray: gameChoiceShape[]) {
     const shareCode = ShareCodeGenerator();
     const gameVotes: votesArrayShape = {};
-
+    let vote_cap: number;
+    voterCount != 0 ? (vote_cap = voterCount) : (vote_cap = 0);
     gamesArray.forEach((game) => {
       gameVotes[String(game.identifier)] = 0;
     });
@@ -114,6 +116,7 @@ function StartNewPoll() {
         selected_games: gamesArray,
         votes: gameVotes,
         voters: [],
+        vote_cap,
       },
     ]);
 
@@ -150,6 +153,14 @@ function StartNewPoll() {
       <section id="game-option-container">
         {saveState === null ? (
           <div id="add-more-container">
+            Number of voters:{" "}
+            <input
+              id="poll-voter-count"
+              type="text"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setVoterCount(Number(e.target.value))
+              }
+            ></input>
             {errorMsg ? <span>{errorMsg}</span> : null}
             {gameSelections.length > 2 ? (
               <button id="reset-slots" onClick={handleClearSelectedGames}>
@@ -161,6 +172,7 @@ function StartNewPoll() {
             </button>
           </div>
         ) : null}
+
         {gameSelections.map((value, index) => (
           <div key={`${value.name}-${index}`}>
             <GameOption

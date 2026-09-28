@@ -396,6 +396,16 @@ NEW POLL
   border: 5px solid #e3e3e3;
 }
 
+#poll-voter-count {
+  height: 40px;
+  margin: 10px;
+  width: 100px;
+  font-size: 1.2rem;
+  padding: 5px;
+  font-family: var(--heading-font);
+  border: 5px solid #e3e3e3;
+}
+
 .search-container #search-box:focus {
   outline: none;
 }
@@ -570,6 +580,18 @@ Join Poll
   animation-fill-mode: both;
 }
 
+#no-poll-text {
+  color: red;
+  font-family: var(--heading-font);
+  font-size: .8rem;
+}
+
+#share-code-text {
+  margin-top: 20px;
+  font-size: .8rem;
+  font-family: var(--heading-font);
+  width: 100%;
+}
 
 #share-code:focus {
   outline: none;

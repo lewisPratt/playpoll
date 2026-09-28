@@ -48,7 +48,7 @@ function JoinExistingPoll() {
   const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
   const [currentShareCode, setCurrentShareCode] = useState<string>("");
   const localPollsData = localStorage.getItem("polls");
-
+  const [noPollFound, setNoPollFound] = useState<boolean>(false);
   if (localPollsData) {
     const parsedData: localStoreShape = JSON.parse(localPollsData);
     const previousVoteGame = parsedData.polls.find(
@@ -154,10 +154,15 @@ function JoinExistingPoll() {
       console.error("Error creating poll:", error);
     } else {
       console.log("Poll grabbed:", data);
-      //sucessful poll insertion
-      console.log(data[0].selected_games);
-      const storedGames: GameChoice[] = data[0].selected_games;
-      setGameSelections(storedGames);
+      if (data.length === 0) {
+        //no poll grabbed
+        setNoPollFound(true);
+      } else {
+        //successful poll grab
+        console.log(data[0].selected_games);
+        const storedGames: GameChoice[] = data[0].selected_games;
+        setGameSelections(storedGames);
+      }
     }
   }
   return (
@@ -189,11 +194,17 @@ function JoinExistingPoll() {
         ) : (
           <div id="join-poll-input-container">
             <h2>Join an existing poll</h2>
+            {noPollFound && (
+              <p id="no-poll-text">No Poll found with that share code!</p>
+            )}
             <form id="join-form" onSubmit={getPoll}>
               <input type="text" name="share-code" id="share-code"></input>
               <button>Join Poll</button>
             </form>
           </div>
+        )}
+        {currentShareCode && !noPollFound && gameSelections && (
+          <p id="share-code-text">Share code: {currentShareCode}</p>
         )}
       </section>
     </>
